@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main Page</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="line1">
+        <div class="introtext">
+          <h4>Panel-Query Registration</h4>
+        </div>
+        <div class="button2">
+          <button id="logoutButton">Logout</button>
+        </div>
+      </div>
+    </nav>
+    <nav>
+      <div class="line2">
+        <div class="button1">
+          <a href="addquery.html"><button>Add New Query</button></a>
+        </div>
+        <div class="button2">
+          <button>
+            <img
+              src="images/notification-logo.png"
+              height="15"
+              width="15"
+              alt="Notification"
+            />
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="container1">
+      <div class="box">
+        <h2>Profile Information</h2>
+        <ul>
+          <li><strong>Name:</strong> <span id="userName"></span></li>
+          <li><strong>Email:</strong> <span id="userEmail"></span></li>
+          <li><strong>Department:</strong> N/A</li>
+          <li><strong>User Type:</strong> <span id="userType"></span></li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h2>Queries Information</h2>
+        <ul>
+          <li><strong>Pending:</strong> 0</li>
+          <li><strong>Processing:</strong> 0</li>
+          <li><strong>Completed:</strong> 0</li>
+          <li><strong>Total:</strong> 0</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab">
+      <div class="head1">
+        <h4>Processing Queries</h4>
+      </div>
+      <input type="text" placeholder="Enter Ticket Number" />
+      <table id="processingTable">
+        <thead>
+          <tr>
+            <th>Ticket Number</th>
+            <th>Query</th>
+            <th>Query Number</th>
+            <th>Type</th>
+            <th>Responder</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Resolution Date</th>
+            <th>Last Update</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12345</td>
+            <td>Test Query</td>
+            <td>1234</td>
+            <td>Type 1</td>
+            <td>John Doe</td>
+            <td>IT</td>
+            <td>2023-03-01</td>
+            <td>2023-03-05</td>
+            <td>2023-03-03</td>
+            <td>Action 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab">
+      <div class="head1">
+        <h4>Pending Queries</h4>
+      </div>
+      <input type="text" placeholder="Enter Ticket Number" />
+      <table id="pendingTable">
+        <thead>
+          <tr>
+            <th>Ticket Number</th>
+            <th>User Type</th>
+            <th>Reg/Emp No.</th>
+            <th>Responder</th>
+            <th>Department</th>
+            <th>Query Type</th>
+            <th>Query Date</th>
+            <th>Resolution Date</th>
+            <th>Last Update</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12345</td>
+            <td>Student</td>
+            <td>1234</td>
+            <td>John Doe</td>
+            <td>IT</td>
+            <td>Type 1</td>
+            <td>2023-03-01</td>
+            <td>2023-03-05</td>
+            <td>2023-03-03</td>
+            <td>Action 2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab">
+      <div class="head1">
+        <h4>Completed Queries</h4>
+      </div>
+      <input type="text" placeholder="Enter Ticket Number" />
+      <table id="completedTable">
+        <thead>
+          <tr>
+            <th>Ticket Number</th>
+            <th>Query Type</th>
+            <th>Responder</th>
+            <th>Department</th>
+            <th>Query Date</th>
+            <th>Resolution Date</th>
+            <th>Last Update</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12345</td>
+            <td>Test Query</td>
+            <td>John Doe</td>
+            <td>IT</td>
+            <td>2023-03-01</td>
+            <td>2023-03-05</td>
+            <td>2023-03-03</td>
+            <td>Action 3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
