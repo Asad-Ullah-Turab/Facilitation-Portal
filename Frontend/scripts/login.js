@@ -27,6 +27,10 @@ document
     var username = document.getElementById("username").value;
     // Log the username to the console
     console.log("Username:", username);
+    // Store the username in local storage
+    localStorage.setItem("username", username);
+    localStorage.setItem("email", `${username}@gmail.com`);
+    localStorage.setItem("userType", "Student");
     // Redirect to main.html
     window.location.href = "main.html";
   });
