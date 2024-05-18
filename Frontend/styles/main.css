@@ -112,7 +112,7 @@ li {
 }
 
 input[type="text"] {
-  width: calc(100% - 20px);
+  width: 100%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ddd;
