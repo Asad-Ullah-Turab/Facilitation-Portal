@@ -1,3 +1,8 @@
+pendingNumber = 0;
+processingNumber = 0;
+completedNumber = 0;
+totalNumber = 0;
+
 // Retrieve user information from local storage
 var username = localStorage.getItem("username");
 var email = localStorage.getItem("email");
@@ -17,9 +22,69 @@ document.getElementById("logoutButton").addEventListener("click", function () {
   // Redirect to the login page
   window.location.href = "login.html";
 });
-async function populateTable() {
+
+async function populatePendingTable() {
   try {
-    const response = await fetch("http://localhost:3000/fetchData");
+    const response = await fetch("http://localhost:3000/fetchDataPending");
+    const data = await response.json();
+    const table = document
+      .getElementById("pendingTable")
+      .getElementsByTagName("tbody")[0];
+
+    data.forEach((element) => {
+      const row = table.insertRow();
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+      const cell4 = row.insertCell(3);
+      const cell5 = row.insertCell(4);
+      const cell6 = row.insertCell(5);
+      cell1.textContent = element.id;
+      cell2.textContent = element.department;
+      cell3.textContent = element.description;
+      cell4.textContent = element.queryType;
+      cell5.textContent = element.contactNo;
+      cell6.textContent = element.priority;
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  pendingNumber = document.getElementById("pendingTable").rows.length - 1;
+  document.querySelector(".js-pending-number").textContent = pendingNumber;
+}
+async function populateProcessingTable() {
+  try {
+    const response = await fetch("http://localhost:3000/fetchDataProcessing");
+    const data = await response.json();
+    const table = document
+      .getElementById("processingTable")
+      .getElementsByTagName("tbody")[0];
+
+    data.forEach((element) => {
+      const row = table.insertRow();
+      const cell1 = row.insertCell(0);
+      const cell2 = row.insertCell(1);
+      const cell3 = row.insertCell(2);
+      const cell4 = row.insertCell(3);
+      const cell5 = row.insertCell(4);
+      const cell6 = row.insertCell(5);
+      cell1.textContent = element.id;
+      cell2.textContent = element.department;
+      cell3.textContent = element.description;
+      cell4.textContent = element.queryType;
+      cell5.textContent = element.contactNo;
+      cell6.textContent = element.priority;
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  processingNumber = document.getElementById("processingTable").rows.length - 1;
+  document.querySelector(".js-processing-number").textContent =
+    processingNumber;
+}
+async function populateCompletedTable() {
+  try {
+    const response = await fetch("http://localhost:3000/fetchDataCompleted");
     const data = await response.json();
     const table = document
       .getElementById("completedTable")
@@ -43,6 +108,13 @@ async function populateTable() {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
+  completedNumber = document.getElementById("completedTable").rows.length - 1;
+  totalNumber = pendingNumber + processingNumber + completedNumber;
+  document.querySelector(".js-completed-number").textContent = completedNumber;
+  document.querySelector(".js-total-number").textContent = totalNumber;
 }
-
-window.onload = populateTable;
+window.onload = function () {
+  populatePendingTable();
+  populateProcessingTable();
+  populateCompletedTable();
+};

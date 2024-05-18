@@ -27,7 +27,7 @@ app.post("/submit-query", (req, res) => {
   const { department, description, queryType, contactNo, priority } = req.body;
 
   const query =
-    "INSERT INTO queries (department, description, queryType, contactNo, priority) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO pending_queries (department, description, queryType, contactNo, priority) VALUES (?, ?, ?, ?, ?)";
   db.query(
     query,
     [department, description, queryType, contactNo, priority],
@@ -43,8 +43,34 @@ app.post("/submit-query", (req, res) => {
 });
 
 // Fetch data from the mysql database
-app.get("/fetchData", (req, res) => {
-  const query = "SELECT * FROM queries";
+app.get("/fetchDataPending", (req, res) => {
+  const query = "SELECT * FROM pending_queries";
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Failed to fetch data: ", err);
+      res.status(500).send("Error fetching data");
+      return;
+    }
+    res.send(result);
+    console.log(result);
+  });
+});
+// Fetch data from the mysql database
+app.get("/fetchDataProcessing", (req, res) => {
+  const query = "SELECT * FROM processing_queries";
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Failed to fetch data: ", err);
+      res.status(500).send("Error fetching data");
+      return;
+    }
+    res.send(result);
+    console.log(result);
+  });
+});
+// Fetch data from the mysql database
+app.get("/fetchDataCompleted", (req, res) => {
+  const query = "SELECT * FROM completed_queries";
   db.query(query, (err, result) => {
     if (err) {
       console.error("Failed to fetch data: ", err);

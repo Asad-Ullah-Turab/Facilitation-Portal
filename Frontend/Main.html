@@ -50,40 +50,24 @@
       <div class="box">
         <h2>Queries Information</h2>
         <ul>
-          <li><strong>Pending:</strong> 0</li>
-          <li><strong>Processing:</strong> 0</li>
-          <li><strong>Completed:</strong> 0</li>
-          <li><strong>Total:</strong> 0</li>
+          <li>
+            <strong>Pending:</strong>
+            <span class="js-pending-number">0</span>
+          </li>
+          <li>
+            <strong>Processing:</strong>
+            <span class="js-processing-number">0</span>
+          </li>
+          <li>
+            <strong>Completed:</strong>
+            <span class="js-completed-number">0</span>
+          </li>
+          <li>
+            <strong>Total:</strong>
+            <span class="js-total-number">0</span>
+          </li>
         </ul>
       </div>
-    </div>
-    <div class="tab">
-      <div class="head1">
-        <h4>Processing Queries</h4>
-      </div>
-      <input type="text" placeholder="Enter Ticket Number" />
-      <table id="processingTable">
-        <thead>
-          <tr>
-            <th>Query Id</th>
-            <th>Department</th>
-            <th>Description</th>
-            <th>Type</th>
-            <th>Contact No.</th>
-            <th>Priority</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12345</td>
-            <td>Test Query</td>
-            <td>1234</td>
-            <td>Type 1</td>
-            <td>John Doe</td>
-            <td>IT</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
     <div class="tab">
       <div class="head1">
@@ -101,16 +85,26 @@
             <th>Priority</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="tab">
+      <div class="head1">
+        <h4>Processing Queries</h4>
+      </div>
+      <input type="text" placeholder="Enter Ticket Number" />
+      <table id="processingTable">
+        <thead>
           <tr>
-            <td>12345</td>
-            <td>Student</td>
-            <td>1234</td>
-            <td>John Doe</td>
-            <td>IT</td>
-            <td>Type 1</td>
+            <th>Query Id</th>
+            <th>Department</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Contact No.</th>
+            <th>Priority</th>
           </tr>
-        </tbody>
+        </thead>
+        <tbody></tbody>
       </table>
     </div>
 
@@ -130,16 +124,7 @@
             <th>Priority</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>12345</td>
-            <td>Test Query</td>
-            <td>John Doe</td>
-            <td>IT</td>
-            <td>2023-03-01</td>
-            <td>2023-03-05</td>
-          </tr>
-        </tbody>
+        <tbody></tbody>
       </table>
     </div>
     <script src="scripts/main.js"></script>
