@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 app.use(cors()); // Enable CORS for all routes
@@ -52,7 +54,6 @@ app.get("/fetchDataPending", (req, res) => {
       return;
     }
     res.send(result);
-    console.log(result);
   });
 });
 // Fetch data from the mysql database
@@ -65,7 +66,6 @@ app.get("/fetchDataProcessing", (req, res) => {
       return;
     }
     res.send(result);
-    console.log(result);
   });
 });
 // Fetch data from the mysql database
@@ -78,7 +78,102 @@ app.get("/fetchDataCompleted", (req, res) => {
       return;
     }
     res.send(result);
-    console.log(result);
+  });
+});
+
+app.post("/register", (req, res) => {
+  const { username, password, userType, email } = req.body;
+
+  // Validate username and password
+  if (typeof username !== "string" || typeof password !== "string") {
+    return res.status(400).json({ message: "Invalid input" });
+  }
+
+  const checkUserSql = "SELECT * FROM users WHERE username = ?";
+  db.query(checkUserSql, [username], (err, results) => {
+    if (err) {
+      console.error("Database query error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    if (results.length > 0) {
+      return res.status(400).json({ message: "Username already exists" });
+    }
+
+    // Ensure password is a string and salt rounds is a number
+    const saltRounds = 10;
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      if (err) {
+        console.error("Error hashing password:", err);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+
+      const sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+      db.query(sql, [username, hash], (err, result) => {
+        if (err) {
+          console.error("Database insert error:", err);
+          return res.status(500).json({ message: "Internal server error" });
+        }
+        res.json({ message: "User registered" });
+      });
+    });
+  });
+});
+
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  const sql = "SELECT * FROM users WHERE username = ?";
+  db.query(sql, [username], (err, results) => {
+    if (err) {
+      console.error("Database query error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(400).json({ message: "No user found" });
+    }
+
+    bcrypt.compare(password, results[0].password, (err, isMatch) => {
+      if (err) {
+        console.error("Error comparing passwords:", err);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+
+      if (isMatch) {
+        const token = jwt.sign({ id: results[0].id }, "your_jwt_secret", {
+          expiresIn: "1h",
+        });
+        res.json({ token });
+      } else {
+        res.status(400).json({ message: "Password incorrect" });
+      }
+    });
+  });
+});
+
+const verifyToken = (req, res, next) => {
+  const bearerHeader = req.headers["authorization"];
+
+  if (typeof bearerHeader !== "undefined") {
+    const bearerToken = bearerHeader.split(" ")[1];
+    jwt.verify(bearerToken, "your_jwt_secret", (err, authData) => {
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        req.authData = authData;
+        next();
+      }
+    });
+  } else {
+    res.sendStatus(403);
+  }
+};
+
+app.get("/protected", verifyToken, (req, res) => {
+  res.json({
+    message: "This is protected",
+    authData: req.authData,
   });
 });
 
