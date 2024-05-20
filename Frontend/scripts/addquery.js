@@ -27,4 +27,6 @@ document
       .catch((error) => {
         console.error("Error:", error);
       });
+    // Redirect to main.html
+    window.location.href = "main.html";
   });
