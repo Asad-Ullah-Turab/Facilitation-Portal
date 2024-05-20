@@ -33,28 +33,36 @@ A query submission portal where users can login and submit their queries, which 
    - Create tables in the database:
      ```sql
      CREATE TABLE pending_queries (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       department VARCHAR(50),
-       description TEXT,
-       queryType VARCHAR(50),
-       contactNo VARCHAR(50),
-       priority VARCHAR(20)
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      department VARCHAR(50),
+      description TEXT,
+      queryType VARCHAR(50),
+      contactNo VARCHAR(50),
+      priority VARCHAR(20)
      );
      CREATE TABLE processing_queries (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       department VARCHAR(50),
-       description TEXT,
-       queryType VARCHAR(50),
-       contactNo VARCHAR(50),
-       priority VARCHAR(20)
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      department VARCHAR(50),
+      description TEXT,
+      queryType VARCHAR(50),
+      contactNo VARCHAR(50),
+      priority VARCHAR(20)
      );
      CREATE TABLE completed_queries (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       department VARCHAR(50),
-       description TEXT,
-       queryType VARCHAR(50),
-       contactNo VARCHAR(50),
-       priority VARCHAR(20)
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      department VARCHAR(50),
+      description TEXT,
+      queryType VARCHAR(50),
+      contactNo VARCHAR(50),
+      priority VARCHAR(20)
+     );
+     CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      username VARCHAR(255) NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      usertype VARCHAR(50) NOT NULL DEFAULT 'user',
+      email VARCHAR(255) NOT NULL
      );
      ```
 5. Update the database configuration in `Backend\server.js`:
@@ -66,6 +74,8 @@ A query submission portal where users can login and submit their queries, which 
      database: "querydb", // Change this to your database name
    });
    ```
+
+````
 
 ## Usage
 
@@ -88,3 +98,4 @@ Explain how others can contribute to the project, including guidelines for submi
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
+````

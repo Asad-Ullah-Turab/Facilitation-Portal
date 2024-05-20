@@ -82,25 +82,31 @@ app.get("/fetchDataCompleted", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const { username, password, userType, email } = req.body;
+  const { username, password, email, usertype } = req.body;
 
-  // Validate username and password
-  if (typeof username !== "string" || typeof password !== "string") {
+  // Validate inputs
+  if (
+    typeof username !== "string" ||
+    typeof password !== "string" ||
+    typeof email !== "string" ||
+    typeof usertype !== "string"
+  ) {
     return res.status(400).json({ message: "Invalid input" });
   }
 
-  const checkUserSql = "SELECT * FROM users WHERE username = ?";
-  db.query(checkUserSql, [username], (err, results) => {
+  const checkUserSql = "SELECT * FROM users WHERE username = ? OR email = ?";
+  db.query(checkUserSql, [username, email], (err, results) => {
     if (err) {
       console.error("Database query error:", err);
       return res.status(500).json({ message: "Internal server error" });
     }
 
     if (results.length > 0) {
-      return res.status(400).json({ message: "Username already exists" });
+      return res
+        .status(400)
+        .json({ message: "Username or email already exists" });
     }
 
-    // Ensure password is a string and salt rounds is a number
     const saltRounds = 10;
     bcrypt.hash(password, saltRounds, (err, hash) => {
       if (err) {
@@ -108,8 +114,9 @@ app.post("/register", (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
       }
 
-      const sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-      db.query(sql, [username, hash], (err, result) => {
+      const sql =
+        "INSERT INTO users (username, password, email, usertype) VALUES (?, ?, ?, ?)";
+      db.query(sql, [username, hash, email, usertype], (err, result) => {
         if (err) {
           console.error("Database insert error:", err);
           return res.status(500).json({ message: "Internal server error" });
@@ -141,10 +148,17 @@ app.post("/login", (req, res) => {
       }
 
       if (isMatch) {
+        const user = {
+          id: results[0].id,
+          username: results[0].username,
+          email: results[0].email,
+          usertype: results[0].usertype,
+          // Add any other columns you want to send
+        };
         const token = jwt.sign({ id: results[0].id }, "your_jwt_secret", {
           expiresIn: "1h",
         });
-        res.json({ token });
+        res.json({ token, user });
       } else {
         res.status(400).json({ message: "Password incorrect" });
       }

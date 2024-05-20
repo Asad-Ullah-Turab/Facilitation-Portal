@@ -6,7 +6,7 @@ totalNumber = 0;
 // Retrieve user information from local storage
 var username = localStorage.getItem("username");
 var email = localStorage.getItem("email");
-var userType = localStorage.getItem("userType");
+var userType = localStorage.getItem("usertype");
 
 // Display user information in the personal info section
 document.getElementById("userName").textContent = username;
