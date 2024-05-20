@@ -26,13 +26,14 @@ db.connect((err) => {
 });
 
 app.post("/submit-query", (req, res) => {
-  const { department, description, queryType, contactNo, priority } = req.body;
+  const { department, description, queryType, contactNo, priority, user_id } =
+    req.body;
 
   const query =
-    "INSERT INTO pending_queries (department, description, queryType, contactNo, priority) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO pending_queries (department, description, queryType, contactNo, priority, user_id) VALUES (?, ?, ?, ?, ?, ?)";
   db.query(
     query,
-    [department, description, queryType, contactNo, priority],
+    [department, description, queryType, contactNo, priority, user_id],
     (err, result) => {
       if (err) {
         console.error("Failed to insert query: ", err);
@@ -43,17 +44,25 @@ app.post("/submit-query", (req, res) => {
     }
   );
 });
+// Fetch personalized queries for the authenticated user
+app.post("/fetchDataPending", (req, res) => {
+  const { userId } = req.body;
 
-// Fetch data from the mysql database
-app.get("/fetchDataPending", (req, res) => {
-  const query = "SELECT * FROM pending_queries";
-  db.query(query, (err, result) => {
+  // Check if userId is provided
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
+
+  // Construct the SQL query to fetch personalized queries
+  const query = "SELECT * FROM pending_queries WHERE user_id = ?";
+  db.query(query, [userId], (err, result) => {
     if (err) {
-      console.error("Failed to fetch data: ", err);
-      res.status(500).send("Error fetching data");
-      return;
+      console.error("Failed to fetch personalized queries: ", err);
+      return res
+        .status(500)
+        .json({ message: "Failed to fetch personalized queries" });
     }
-    res.send(result);
+    res.json(result);
   });
 });
 // Fetch data from the mysql database

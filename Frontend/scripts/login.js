@@ -45,6 +45,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     localStorage.setItem("username", data.user.username);
     localStorage.setItem("email", data.user.email);
     localStorage.setItem("usertype", data.user.usertype);
+    localStorage.setItem("id", data.user.id);
     // Redirect to main.html
     window.location.href = "main.html";
   } else {

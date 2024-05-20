@@ -25,7 +25,18 @@ document.getElementById("logoutButton").addEventListener("click", function () {
 
 async function populatePendingTable() {
   try {
-    const response = await fetch("http://localhost:3000/fetchDataPending");
+    // Assuming you have access to the user ID in your frontend code
+    const userId = localStorage.getItem("id"); // Replace getUserId() with your actual function to get the user ID
+    console.log("User ID:", userId);
+
+    const response = await fetch("http://localhost:3000/fetchDataPending", {
+      method: "POST", // Use POST method to send data in the request body
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }), // Include the user ID in the request body
+    });
+
     const data = await response.json();
     const table = document
       .getElementById("pendingTable")
@@ -52,6 +63,7 @@ async function populatePendingTable() {
   pendingNumber = document.getElementById("pendingTable").rows.length - 1;
   document.querySelector(".js-pending-number").textContent = pendingNumber;
 }
+
 async function populateProcessingTable() {
   try {
     const response = await fetch("http://localhost:3000/fetchDataProcessing");

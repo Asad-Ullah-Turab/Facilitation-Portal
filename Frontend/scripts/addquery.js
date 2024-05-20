@@ -9,6 +9,7 @@ document
       queryType: document.getElementById("queryType").value,
       contactNo: document.getElementById("contactNo").value,
       priority: document.querySelector('input[name="priority"]:checked').value,
+      user_id: localStorage.getItem("id"),
     };
 
     fetch("http://localhost:3000/submit-query", {
