@@ -104,6 +104,16 @@ Replace `npm` with the appropriate package manager if you're not using npm.
 
 That's it, fam! You're now part of the crew.
 
+## **Contact**
+
+For any questions or feedback, feel free to reach out:
+
+## **Authors: Israr Ahmad,Asadullah Turab, Muhammad Saad**
+
+## **GitHub: israrahmad831 ,Asad-Ullah-Turab, Saadimehar**
+
+## **LinkedIn: https://www.linkedin.com/in/israrahmad2004/,https://www.linkedin.com/in/asadullah-turab-6946b2236/ ,https://www.linkedin.com/in/muhammad-saad-a58a891a2/**
+
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
